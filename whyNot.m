@@ -1,3 +1,10 @@
+%% whyNot: find largest multiple of 3digit numbers that is a palindrome
+%
+%
+%
+%%% Remarks
+
+
 vec = [];
 for i = 100:999
     for j = 100:999
