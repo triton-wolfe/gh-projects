@@ -1,7 +1,6 @@
 public class Dollar {
     private int cents;
     private int dollars;
-    private boolean inDebt;
 
     public Dollar(int dollars) {
         this(dollars, 0);
@@ -16,7 +15,7 @@ public class Dollar {
         this.dollars += other.getDollars;
         this.dollars += (this.cents + other.getCents) / 100;
     }
-
+a
     public void deposit(int dollars) {
         this.deposit(dollars, 0);
     }
