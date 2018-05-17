@@ -3,11 +3,23 @@ public class Dollar {
     private int dollars;
 
     public Dollar(int dollars, int cents) {
-        this.dollars = dollars;
-        this.cents = cents;
+        this.cents = cents % 100;
+        this.dollars = dollars + (cents / 100);
     }
 
-    
+    public void add(Dollar other) {
+        this.cents = (this.cents + other.getCents) % 100;
+        this.dollars += other.getDollars;
+        this.dollars += (this.cents + other.getCents) / 100;
+    }
+
+    public int getDollars() {
+        return this.dollars;
+    }
+
+    public int getCents() {
+        return this.dollars;
+    }
 
     @Override
     public int hashCode() {
