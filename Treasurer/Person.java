@@ -26,7 +26,11 @@ public class Person {
     }
 
     public String getNickname() {
-        return this.name;
+        return this.nickname;
+    }
+
+    public String getFullname() {
+        return this.fullname;
     }
 
     public Dollar getBalance() {
