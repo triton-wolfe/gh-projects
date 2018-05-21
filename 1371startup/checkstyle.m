@@ -72,5 +72,6 @@ end
 
 
 
-fcnHeaderRegEx = '^\s+function((\s+[a-zA-Z0-9_]*|\s*\[\s*[a-zA-Z0-9_ ,]*\s*\])\s*=)?\s+[a-zA-z][a-zA-Z0-9_]*\s*(\(\s*[a-zA-Z0-9_ ,]*\s*\))?$';
+fcnHeaderRegEx = '^function((\s+[a-zA-Z0-9_]*|\s*\[\s*[a-zA-Z0-9_ ,]*\s*\])\s*=)?\s+[a-zA-z][a-zA-Z0-9_]*\s*(\(\s*[a-zA-Z0-9_ ,]*\s*\))?$';
 %                     function     var1                 [var2]                 =      fcnName                    (var3)
+varNameRegEx = '[a-zA-Z][a-zA-Z0-9_]';
