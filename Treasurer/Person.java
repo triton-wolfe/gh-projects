@@ -4,7 +4,7 @@ public class Person {
     private Dollar balance;
 
     public Person(String name) {
-        this(name, name, new Dollar(0))
+        this(name, name, new Dollar(0));
     }
 
     public Person(String name, double balance) {
@@ -16,7 +16,7 @@ public class Person {
     }
 
     public Person(String nickname, String fullname, double balance) {
-        this(nickname, fullname, new Dollar(balance))
+        this(nickname, fullname, new Dollar(balance));
     }
 
     public Person(String nickname, String fullname, Dollar balance) {
@@ -40,7 +40,8 @@ public class Person {
     @Override
     public int hashCode() {
         return 31 * this.balance.hashCode()
-            + 31 * this.name.hashCode();
+            + 31 * this.fullname.hashCode()
+            + 31 * this.nickname.hashCode();
     }
 
     @Override
@@ -48,12 +49,13 @@ public class Person {
         if (this == other) { return true; }
         if (!(other instanceof Person)) { return false; }
         Person o = (Person) other;
-        return this.name.equals(o.getName())
+        return this.fullname.equals(o.getFullname())
+            && this.nickname.equals(o.getNickname())
             && this.balance.equals(o.getBalance());
     }
 
     @Override
     public String toString() {
-        return this.name + ": Balance " + this.balance.toString();
+        return this.fullname + ": Balance " + this.balance.toString();
     }
 }
