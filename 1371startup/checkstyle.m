@@ -46,16 +46,16 @@ function checkFileStyle(filename)
         if contains(line,{'function','if','switch','case','otherwise','for','while'})
             ctrlStructs = [ctrlStructs {'hi'}];
         end
-        
+
         if contains(line,'function') && contains(line,strtok(filename,'.'))
             %isValidFcnHeader(line)
-            
-        
-        
-        
-        
+
+
+
+
+
         end
-        
+
         line = fgetl(fh);
         lineNum = lineNum + 1;
     end
@@ -69,3 +69,9 @@ function checkFileStyle(filename)
         end
     end
 end
+
+
+
+fcnHeaderRegEx = '^function((\s+[a-zA-Z0-9_]*|\s*\[\s*[a-zA-Z0-9_ ,]*\s*\])\s*=)?\s+[a-zA-z][a-zA-Z0-9_]*\s*(\(\s*[a-zA-Z0-9_ ,]*\s*\))?$';
+%                     function     var1                 [var2]                 =      fcnName                    (var3)
+varNameRegEx = '[a-zA-Z][a-zA-Z0-9_]';
