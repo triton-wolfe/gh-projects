@@ -3,18 +3,6 @@ public class Person {
     private String fullname;
     private Dollar balance;
 
-    public Person(String name) {
-        this(name, name, new Dollar(0));
-    }
-
-    public Person(String name, double balance) {
-        this(name, name, new Dollar(balance));
-    }
-
-    public Person(String nickname, String fullname) {
-        this(nickname, fullname, new Dollar(0));
-    }
-
     public Person(String nickname, String fullname, double balance) {
         this(nickname, fullname, new Dollar(balance));
     }
