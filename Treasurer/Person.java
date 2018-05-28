@@ -1,15 +1,17 @@
 public class Person {
     private String nickname;
     private String fullname;
+    private String status;
     private Dollar balance;
 
-    public Person(String nickname, String fullname, double balance) {
-        this(nickname, fullname, new Dollar(balance));
+    public Person(String nickname, String fullname, String status, double balance) {
+        this(nickname, fullname, status, new Dollar(balance));
     }
 
-    public Person(String nickname, String fullname, Dollar balance) {
+    public Person(String nickname, String fullname, String status, Dollar balance) {
         this.nickname = nickname;
         this.fullname = fullname;
+        this.status = status;
         this.balance = balance;
     }
 
@@ -19,6 +21,14 @@ public class Person {
 
     public String getFullname() {
         return this.fullname;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Dollar getBalance() {
