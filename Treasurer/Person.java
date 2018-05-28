@@ -35,6 +35,12 @@ public class Person {
         return this.balance;
     }
 
+    public String toCSV() {
+        return String.format(
+            "{%nnickname: %s%nfullname: %s%nstatus: %s%nbalance: %s%n}",
+            this.nickname, this.fullname, this.status, this.balance.toCSV());
+    }
+
     @Override
     public int hashCode() {
         return 31 * this.balance.hashCode()

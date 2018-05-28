@@ -13,6 +13,10 @@ public class Dollar {
         this.dollars -= dollars;
     }
 
+    public String toCSV() {
+        return String.format("{%ndollars: $.2f%n}", this.dollars);
+    }
+
     @Override
     public int hashCode() {
         return (int) (100 * this.dollars);
