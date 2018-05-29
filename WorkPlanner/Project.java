@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Project {
     private String name;
     private String classification;
-    private ArrayList<WorkItems> workItems;
+    private ArrayList<WorkItem> workItems;
 
     public Project(String name, String classification) {
         this.name = name
