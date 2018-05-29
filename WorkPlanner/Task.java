@@ -13,4 +13,10 @@ public class Task {
     public String getDescription() { return this.description; }
     public boolean getComplete() { return this.complete; }
     public void setComplete(boolean complete) { this.complete = complete; }
+
+    public String toJSON() {
+        return String.format(
+            "Task: {%nname: %s%ndescription: %s%ncomplete: %s%n}%n",
+            this.name, this.description, this.complete);
+    }
 }
