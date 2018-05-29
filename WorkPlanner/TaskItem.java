@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TaskItem extends SaveableItem {
     private String name;
@@ -26,7 +28,7 @@ public class TaskItem extends SaveableItem {
     public String toJSON() {
         return String.format(
             "    TaskItem: {%n      name: %s%n      description: %s%n      start: %s%n"
-            + "      end: %s%n      complete: %s%n  }%n",
+            + "      end: %s%n      complete: %s%n    }%n",
             this.name, this.description, this.start.toString(),
             this.end.toString(), this.complete);
     }

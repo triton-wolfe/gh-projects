@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class ProjectItem extends SaveableItem {
     private String name;
@@ -6,7 +8,7 @@ public class ProjectItem extends SaveableItem {
     private ArrayList<WorkItem> workItems;
 
     public ProjectItem(String name, String classification) {
-        this(name, classification, new ArrayList<WorkItem>())
+        this(name, classification, new ArrayList<WorkItem>());
     }
 
     public ProjectItem(String name, String classification, ArrayList<WorkItem> workItems) {
@@ -25,17 +27,17 @@ public class ProjectItem extends SaveableItem {
             workItemJson += w.toJSON();
         }
         return String.format(
-            "Project: {%n  name: %s%n  classification%s%n  workItems: %s%n}%n",
+            "Project: {%n  name: %s%n  classification%s%n  workItems: %s}",
             this.name, this.classification, workItemJson);
     }
 
     public static ProjectItem fromJSON(String json) {
-        Pattern workItems = Pattern("WorkItem: \\{.*?\\}");
-        Matcher workItemsMatch = workItems.matcher(json);
-        ArrayList<WorkItem> work = new ArrayList<>();
+        Pattern workItemPat = Pattern.compile("WorkItem: \\{.*?\\}");
+        Matcher workItemsMatch = workItemPat.matcher(json);
+        ArrayList<WorkItem> workItems = new ArrayList<>();
         while (workItemsMatch.find()) {
             String workItem = workItemsMatch.group();
-            work.add(WorkItem.fromJson(workItem));
+            workItems.add(WorkItem.fromJSON(workItem));
         }
         String[] tokens = json.split(String.format("%n"));
         String name = "";
@@ -47,5 +49,6 @@ public class ProjectItem extends SaveableItem {
                 classification = token.substring(22);
             }
         }
+        return new ProjectItem(name, classification, workItems);
     }
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class WorkItem extends SaveableItem {
     private String name;
@@ -32,17 +34,17 @@ public class WorkItem extends SaveableItem {
             taskJson += t.toJSON();
         }
         return String.format(
-            "  WorkItem: {%n    name: %s%n    description: %s%n    tasks: %s%n}%n",
+            "  WorkItem: {%n    name: %s%n    description: %s%n    tasks: %s  }%n",
             this.name, this.description, taskJson);
     }
 
     public static WorkItem fromJSON(String json) {
-        Pattern taskItems = Pattern("TaskItem: \\{.*?\\}");
+        Pattern taskItems = Pattern.compile("TaskItem: \\{.*?\\}");
         Matcher taskItemsMatch = taskItems.matcher(json);
         ArrayList<TaskItem> tasks = new ArrayList<>();
         while (taskItemsMatch.find()) {
             String taskItem = taskItemsMatch.group();
-            tasks.add(TaskItem.fromJson(taskItem));
+            tasks.add(TaskItem.fromJSON(taskItem));
         }
         String[] tokens = json.split(String.format("%n"));
         String name = "";
