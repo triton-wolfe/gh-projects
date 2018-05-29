@@ -6,14 +6,14 @@ public class Project {
     private ArrayList<WorkItem> workItems;
 
     public Project(String name, String classification) {
-        this.name = name
+        this.name = name;
         this.classification = classification;
         this.workItems = new ArrayList<>();
     }
 
     public String getName() { return this.name; }
     public String getClassification() { return this.classification; }
-    public ArrayList<WorkItems> getWorkItems() { return this.workItems; }
+    public ArrayList<WorkItem> getWorkItems() { return this.workItems; }
 
     public String toJSON() {
         String workItemJson = "";
@@ -21,7 +21,7 @@ public class Project {
             workItemJson += w.toJSON();
         }
         return String.format(
-            "Project {%nname: %s%nclassification: %s%nworkItems: %s%n}%n",
+            "Project: {%n  name: %s%n  classification%s%n  workItems: %s%n}%n",
             this.name, this.classification, workItemJson);
     }
 }

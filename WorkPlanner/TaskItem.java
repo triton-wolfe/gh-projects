@@ -1,19 +1,19 @@
 import java.time.LocalDateTime;
 
-public class Task {
+public class TaskItem {
     private String name;
     private String description;
     private LocalDateTime start;
     private LocalDateTime end;
     private boolean complete;
 
-    public Task(String name, String description,
-                LocalDateTime start, LocalDateTime end) {
+    public TaskItem(String name, String description,
+                LocalDateTime start, LocalDateTime end, boolean complete) {
         this.name = name;
         this.description = description;
         this.start = start;
         this.end = end;
-        this.complete = false;
+        this.complete = complete;
     }
 
     public String getName() { return this.name; }
@@ -25,27 +25,35 @@ public class Task {
 
     public String toJSON() {
         return String.format(
-            "Task: {%nname: %s%ndescription: %s%nstart: %s%n"
-            + "end: %s%ncomplete: %s%n}%n",
+            "    TaskItem: {%n      name: %s%n      description: %s%n      start: %s%n"
+            + "      end: %s%n      complete: %s%n  }%n",
             this.name, this.description, this.start.toString(),
             this.end.toString(), this.complete);
     }
 
-    public static Task fromJson(String json) {
+    public static TaskItem fromJson(String json) {
         String[] tokens = json.split(String.format("%n"));
+        String nameParsed = ""; String descriptionParsed = "";
+        LocalDateTime startParsed = LocalDateTime.now();
+        LocalDateTime endParsed = LocalDateTime.now();
+        boolean completeParsed = false;
         for (String token: tokens) {
+            token = token.trim();
             if (token.startsWith("name:")) {
-                String name = token.subString(6);
+                nameParsed = token.substring(6);
             } else if (token.startsWith("description:")) {
-                String description = token.substring(13);
+                descriptionParsed = token.substring(13);
             } else if (token.startsWith("start:")) {
-                LocalDateTime start = LocalDateTime.parse(token.substring(7));
+                startParsed =
+                    LocalDateTime.parse(token.substring(7));
             } else if (token.startsWith("end:")) {
-                LocalDateTime end = LocalDateTime.parse(token.substring(5));
+                endParsed =
+                    LocalDateTime.parse(token.substring(5));
             } else if (token.startsWith("complete:")) {
-                boolean complete = Boolean.parse(token.substring(10));
+                completeParsed = Boolean.parseBoolean(token.substring(10));
             }
         }
-        return new Task(name, description, start, end, complete);
+        return new TaskItem(nameParsed, descriptionParsed,
+            startParsed, endParsed, completeParsed);
     }
 }
