@@ -17,7 +17,7 @@ public class WorkItem {
     public boolean isComplete() {
         toReturn = true;
         for (Task t: tasks) {
-            toReturn = toReturn && t.isComplete();
+            toReturn = toReturn && t.getComplete();
         }
         return toReturn;
     }
