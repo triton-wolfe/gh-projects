@@ -25,5 +25,7 @@ public class ProjectItem {
             this.name, this.classification, workItemJson);
     }
 
-    public static ProjectItem
+    public static ProjectItem fromJSON(String json) {
+        
+    }
 }

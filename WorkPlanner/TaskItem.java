@@ -31,7 +31,7 @@ public class TaskItem {
             this.end.toString(), this.complete);
     }
 
-    public static TaskItem fromJson(String json) {
+    public static TaskItem fromJSON(String json) {
         String[] tokens = json.split(String.format("%n"));
         String nameParsed = ""; String descriptionParsed = "";
         LocalDateTime startParsed = LocalDateTime.now();

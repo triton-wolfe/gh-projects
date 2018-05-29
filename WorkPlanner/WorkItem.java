@@ -36,7 +36,7 @@ public class WorkItem {
             this.name, this.description, taskJson);
     }
 
-    public static WorkItem fromJson(String json) {
+    public static WorkItem fromJSON(String json) {
         Pattern taskItems = Pattern("TaskItem: \\{.*?\\}");
         Matcher taskItemsMatch = workItems.matcher(json);
         ArrayList<TaskItem> tasks = new ArrayList<>();
