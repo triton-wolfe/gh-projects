@@ -38,7 +38,7 @@ public class WorkItem {
 
     public static WorkItem fromJSON(String json) {
         Pattern taskItems = Pattern("TaskItem: \\{.*?\\}");
-        Matcher taskItemsMatch = workItems.matcher(json);
+        Matcher taskItemsMatch = taskItems.matcher(json);
         ArrayList<TaskItem> tasks = new ArrayList<>();
         while (taskItemsMatch.find()) {
             String taskItem = taskItemsMatch.group();
