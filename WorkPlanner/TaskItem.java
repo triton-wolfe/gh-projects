@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class TaskItem {
+public class TaskItem extends SaveableItem {
     private String name;
     private String description;
     private LocalDateTime start;

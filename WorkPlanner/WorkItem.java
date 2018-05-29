@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class WorkItem {
+public class WorkItem extends SaveableItem {
     private String name;
     private String description;
     private ArrayList<TaskItem> tasks;
