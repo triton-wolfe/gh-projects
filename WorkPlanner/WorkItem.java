@@ -6,9 +6,13 @@ public class WorkItem {
     private ArrayList<TaskItem> tasks;
 
     public WorkItem(String name, String description) {
+        this(name, description, new ArrayList<TaskItem>());
+    }
+
+    public WorkItem(String name, String description, ArrayList<TaskItem> tasks) {
         this.name = name;
         this.description = description;
-        this.tasks = new ArrayList<>();
+        this.tasks = tasks;
     }
 
     public String getName() { return this.name; }
@@ -40,5 +44,16 @@ public class WorkItem {
             String taskItem = taskItemsMatch.group();
             tasks.add(TaskItem.fromJson(taskItem));
         }
+        String[] tokens = json.split(String.format("%n"));
+        String name = "";
+        String description = "";
+        for (String token: tokens) {
+            if (token.startsWith("    name:")) {
+                name = token.substring(10);
+            } else if (token.startsWith("    description:")) {
+                description = token.substring(17);
+            }
+        }
+        return new WorkItem(name, description, tasks);
     }
 }

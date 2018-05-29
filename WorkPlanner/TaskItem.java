@@ -38,19 +38,16 @@ public class TaskItem {
         LocalDateTime endParsed = LocalDateTime.now();
         boolean completeParsed = false;
         for (String token: tokens) {
-            token = token.trim();
-            if (token.startsWith("name:")) {
-                nameParsed = token.substring(6);
-            } else if (token.startsWith("description:")) {
-                descriptionParsed = token.substring(13);
-            } else if (token.startsWith("start:")) {
-                startParsed =
-                    LocalDateTime.parse(token.substring(7));
-            } else if (token.startsWith("end:")) {
-                endParsed =
-                    LocalDateTime.parse(token.substring(5));
-            } else if (token.startsWith("complete:")) {
-                completeParsed = Boolean.parseBoolean(token.substring(10));
+            if (token.startsWith("      name:")) {
+                nameParsed = token.substring(12);
+            } else if (token.startsWith("      description:")) {
+                descriptionParsed = token.substring(19);
+            } else if (token.startsWith("      start:")) {
+                startParsed = LocalDateTime.parse(token.substring(13));
+            } else if (token.startsWith("      end:")) {
+                endParsed = LocalDateTime.parse(token.substring(11));
+            } else if (token.startsWith("      complete:")) {
+                completeParsed = Boolean.parseBoolean(token.substring(16));
             }
         }
         return new TaskItem(nameParsed, descriptionParsed,
