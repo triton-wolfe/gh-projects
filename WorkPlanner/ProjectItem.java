@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public class Project {
+public class ProjectItem {
     private String name;
     private String classification;
     private ArrayList<WorkItem> workItems;
 
-    public Project(String name, String classification) {
+    public ProjectItem(String name, String classification) {
         this.name = name;
         this.classification = classification;
         this.workItems = new ArrayList<>();
@@ -24,4 +24,6 @@ public class Project {
             "Project: {%n  name: %s%n  classification%s%n  workItems: %s%n}%n",
             this.name, this.classification, workItemJson);
     }
+
+    public static ProjectItem
 }
