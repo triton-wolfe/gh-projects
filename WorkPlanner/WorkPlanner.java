@@ -17,7 +17,7 @@ public class WorkPlanner extends Application {
 
     @Override
     public void start(Stage stage) {
-        File saveJson = new File("./saved.json");
+        File saveJson = new File("./saved.item");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         System.out.println(projects);
         stage.setOnCloseRequest((e) -> saveFile(saveJson, projects));
@@ -52,26 +52,23 @@ public class WorkPlanner extends Application {
     }
 
     public ArrayList<ProjectItem> loadFile(File file) {
-        File test = new File("./test.txt");
         ArrayList<ProjectItem> toReturn = new ArrayList<>();
         try {
-            FileReader testReader = new FileReader(test);
-
-        StringBuilder jsonBuilder = new StringBuilder();
-        int letter = ' ';
-        while (letter != -1) {
-            jsonBuilder.append((char) letter);
-            try {
-                letter = testReader.read();
-            } catch(IOException e) {
-                letter = ' ';
+            FileReader testReader = new FileReader(file);
+            StringBuilder jsonBuilder = new StringBuilder();
+            int letter = ' ';
+            while (letter != -1) {
+                jsonBuilder.append((char) letter);
+                try {
+                    letter = testReader.read();
+                } catch(IOException e) {
+                    letter = ' ';
+                }
             }
-        }
-        String[] projectStrings = jsonBuilder.toString().split("Project");
-        for (String ps: projectStrings) {
-            toReturn.add(ProjectItem.fromJSON(ps));
-        }
-            return toReturn;
+            String[] projectStrings = jsonBuilder.toString().split("Project");
+            for (String ps: projectStrings) {
+                toReturn.add(ProjectItem.fromJSON(ps));
+            }
         } catch(FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
