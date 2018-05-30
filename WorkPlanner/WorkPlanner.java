@@ -1,6 +1,6 @@
 import javafx.application.Application;
-import javafx.stage.stage;
-import javafx.scene.scene;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,15 +9,18 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class WorkPlanner extends Application {
 
-    @Overide
+    @Override
     public void start(Stage stage) {
         File saveJson = new File("./saved.json");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
-        stage.setOnCloseRequest(() -> saveFile(saveJson, projects));
+        System.out.println(projects);
+        stage.setOnCloseRequest((e) -> saveFile(saveJson, projects));
 
 
 
@@ -29,25 +32,28 @@ public class WorkPlanner extends Application {
         for (ProjectItem p: projs) {
             ArrayList<WorkItem> wrk = p.getWorkItems();
             for (WorkItem w: wrk) {
-                toReturn.addAll(w.getTaskItems());
+                toReturn.addAll(w.getTasks());
             }
         }
         Collections.sort(toReturn, new Comparator() {
-            public int compare(WorkItem a, WorkItem b) {
+            public int compare(Object a, Object b) {
+                LocalDateTime abegin = ((TaskItem) a).getStart();
+                LocalDateTime bbegin = ((TaskItem) b).getStart();
                 int comp = 0;
-                if (a.isBefore(b)) {
+                if (abegin.isBefore(bbegin)) {
                     comp = 1;
-                } else if (a.isAfter(b)) {
+                } else if (abegin.isAfter(bbegin)) {
                     comp = -1;
                 }
-                return toReturn;
+                return comp;
             }
         });
-        return toReturn
+        return toReturn;
     }
 
     public ArrayList<ProjectItem> loadFile(File file) {
         File test = new File("./test.txt");
+        ArrayList<ProjectItem> toReturn = new ArrayList<>();
         try {
             FileReader testReader = new FileReader(test);
 
@@ -62,28 +68,28 @@ public class WorkPlanner extends Application {
             }
         }
         String[] projectStrings = jsonBuilder.toString().split("Project");
-        ArrayLsit<ProjectItem> toReturn = new ArrayList<>();
         for (String ps: projectStrings) {
-            toReturn.add(ProjectItem.fromJson(ps));
+            toReturn.add(ProjectItem.fromJSON(ps));
         }
             return toReturn;
         } catch(FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        return toReturn;
     }
 
-    public void saveFile(File file, ArrayList<WorkItem> workItems) {
+    public void saveFile(File file, ArrayList<ProjectItem> projItems) {
         String toSave = "";
-        for (WorkItem wi: workItems) {
-            toSave += wi.toJSON();
+        for (ProjectItem p: projItems) {
+            toSave += p.toJSON();
         }
         try {
             FileWriter fh = new FileWriter(file, false);
-            fh.write();
+            fh.write(toSave);
             fh.close();
-        } catch(IOException e) {
-            System.out.println(e.getMessage());
         } catch(FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch(IOException e) {
             System.out.println(e.getMessage());
         }
     }
