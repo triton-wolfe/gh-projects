@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+import java.util.Collections;
 import java.util.ArrayList;
 
 public class WorkPlanner extends Application {
@@ -17,9 +18,32 @@ public class WorkPlanner extends Application {
         File saveJson = new File("./saved.json");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest(() -> saveFile(saveJson, projects));
-        
+
+
 
         stage.show();
+    }
+
+    public ArrayList<TaskItem> getAllTaskItems(ArrayList<ProjectItem> projs) {
+        ArrayList<TaskItem> toReturn = new ArrayList<>();
+        for (ProjectItem p: projs) {
+            ArrayList<WorkItem> wrk = p.getWorkItems();
+            for (WorkItem w: wrk) {
+                toReturn.addAll(w.getTaskItems());
+            }
+        }
+        Collections.sort(toReturn, new Comparator() {
+            public int compare(WorkItem a, WorkItem b) {
+                int comp = 0;
+                if (a.isBefore(b)) {
+                    comp = 1;
+                } else if (a.isAfter(b)) {
+                    comp = -1;
+                }
+                return toReturn;
+            }
+        });
+        return toReturn
     }
 
     public ArrayList<ProjectItem> loadFile(File file) {
