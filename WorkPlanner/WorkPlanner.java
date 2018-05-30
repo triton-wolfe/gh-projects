@@ -67,7 +67,9 @@ public class WorkPlanner extends Application {
             }
             String[] projectStrings = jsonBuilder.toString().split("Project");
             for (String ps: projectStrings) {
-                toReturn.add(ProjectItem.fromJSON(ps));
+                if (!ps.equals(" ")) {
+                    toReturn.add(ProjectItem.fromJSON(ps));
+                }
             }
         } catch(FileNotFoundException e) {
             System.out.println(e.getMessage());

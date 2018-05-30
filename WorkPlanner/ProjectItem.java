@@ -51,7 +51,7 @@ public class ProjectItem extends SaveableItem {
             if (token.startsWith("  name:")) {
                 name = token.substring(8);
             } else if (token.startsWith("  classification:")) {
-                classification = token.substring(22);
+                classification = token.substring(18);
             }
         }
         return new ProjectItem(name, classification, workItems);
