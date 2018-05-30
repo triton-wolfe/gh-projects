@@ -25,8 +25,6 @@ public abstract class SaveableItem {
             }
         }
         for (int j = 0; j < startInds.size(); j++) {
-            System.out.println(json.substring(startInds.get(j).intValue(),
-                endInds.get(j).intValue() + 1));
             toReturn.add(json.substring(startInds.get(j).intValue(),
                 endInds.get(j).intValue() + 1));
         }
