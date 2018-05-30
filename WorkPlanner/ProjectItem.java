@@ -27,7 +27,7 @@ public class ProjectItem extends SaveableItem {
             workItemJson += w.toJSON();
         }
         return String.format(
-            "Project: {%n  name: %s%n  classification: %s%n  workItems: %s}",
+            "Project: {%n  name: %s%n  classification: %s%n  workItems: %s%n}",
             this.name, this.classification, workItemJson);
     }
 
