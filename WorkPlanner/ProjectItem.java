@@ -32,13 +32,18 @@ public class ProjectItem extends SaveableItem {
     }
 
     public static ProjectItem fromJSON(String json) {
-        Pattern workItemPat = Pattern.compile("WorkItem: \\{.*?\\}");
+        ArrayList<String> workItemString = SaveableItem.getNested(json);
+        ArrayList<WorkItem> workItems = new ArrayList<>();
+        for (String wi: workItemString) {
+            workItems.add(WorkItem.fromJSON(wi));
+        }
+        /*Pattern workItemPat = Pattern.compile("WorkItem: \\{.*?\\}");
         Matcher workItemsMatch = workItemPat.matcher(json);
         ArrayList<WorkItem> workItems = new ArrayList<>();
         while (workItemsMatch.find()) {
             String workItem = workItemsMatch.group();
             workItems.add(WorkItem.fromJSON(workItem));
-        }
+        }*/
         String[] tokens = json.split(String.format("%n"));
         String name = "";
         String classification = "";
