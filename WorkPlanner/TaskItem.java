@@ -1,12 +1,16 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class TaskItem extends SaveableItem {
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm M/dd/yy");
     private String name;
     private String description;
     private LocalDateTime start;
+    private String startShort;
     private LocalDateTime end;
+    private String endShort;
     private boolean complete;
 
     public TaskItem(String name, String description,
@@ -14,7 +18,9 @@ public class TaskItem extends SaveableItem {
         this.name = name;
         this.description = description;
         this.start = start;
+        this.startShort = this.start.format(formatter);
         this.end = end;
+        this.endShort = this.end.format(formatter);
         this.complete = complete;
     }
 
@@ -22,7 +28,9 @@ public class TaskItem extends SaveableItem {
     public String getDescription() { return this.description; }
     public boolean getComplete() { return this.complete; }
     public LocalDateTime getStart() { return this.start; }
+    public String getStartShort() { return this.startShort; }
     public LocalDateTime getEnd() { return this.end; }
+    public String getEndShort() { return this.endShort; }
     public void setComplete(boolean complete) { this.complete = complete; }
 
     public String toJSON() {
