@@ -7,6 +7,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -27,25 +29,62 @@ import java.time.LocalDateTime;
 
 public class WorkPlanner extends Application {
 
+    private TableView<TaskItem> taskTableView;
+
     @Override
     public void start(Stage stage) {
         File saveJson = new File("./saved.item");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
-        stage.setOnCloseRequest((e) -> saveFile(saveJson, projects));
-        ObservableList<TaskItem> tasks = getAllTaskItems(projects);
-        Button
+        stage.setOnCloseRequest(e -> saveFile(saveJson, projects));
+        Button addProject = new Button("Add new Project");
+        Button addWork = new Button("Add new Work Item");
+        Button addTask = new Button("Add new Task Item");
+        HBox addButtons = new HBox(addProject, addWork, addTask);
 
 
-
-        VBox taskTableScreen = new VBox();
-        Scene taskTable = new Scene(getTaskTable(tasks));
+        ArrayList<TaskItem> tasks = getAllTaskItems(projects);
+        VBox taskTableScreen = new VBox(getTaskTable(tasks), addButtons);
+        Scene taskTable = new Scene(taskTableScreen);
+        addProject.setOnAction(e -> {
+                addNewProjectScreen(projects);
+                this.taskTableView.refresh();
+            });
         stage.setScene(taskTable);
         stage.show();
     }
 
+    public void addNewProjectScreen(ArrayList<ProjectItem> projects) {
+        TableView<ProjectItem> table =
+            new TableView<ProjectItem>(FXCollections.observableArrayList(projects));
+        TableColumn<ProjectItem, String> names = new TableColumn<>("Task");
+        names.setCellValueFactory(new PropertyValueFactory<ProjectItem, String>("name"));
+        TableColumn<ProjectItem, String> classification = new TableColumn<>("Classification");
+        classification.setCellValueFactory(new PropertyValueFactory<ProjectItem, String>("classification"));
+        TableColumn<ProjectItem, String> numWorkItems = new TableColumn<>("Number of Work Items");
+        numWorkItems.setCellValueFactory(new PropertyValueFactory<ProjectItem, String>("numberOfWorkItems"));
+        TableColumn<ProjectItem, String> attributes = new TableColumn<>("Attributes");
+        attributes.getColumns().setAll(classification, numWorkItems);
+        table.getColumns().setAll(names,attributes);
+
+        Label header = new Label("New Project Item");
+        Label nameLabel = new Label("Project Name: ");
+        TextField newName = new TextField();
+        Label classLabel = new Label("Project Classification: ");
+        TextField newClass = new TextField();
+        Button save = new Button("Add new Project");
+        VBox scene = new VBox(table, header, new HBox(nameLabel, newName),
+            new HBox(classLabel, newClass), save);
+        Stage popup = new Stage();
+        save.setOnAction(e -> {
+                projects.add(new ProjectItem(newName.getText(), newClass.getText()));
+                popup.close();
+            });
+        popup.setScene(new Scene(scene));
+        popup.showAndWait();
+    }
+
     public TableView<TaskItem> getTaskTable(ArrayList<TaskItem> tasks) {
-        TableView<TaskItem> toReturn =
-            new TableView<TaskItem>(FXCollections.observableArrayList(tasks));
+        this.taskTableView = new TableView<TaskItem>(FXCollections.observableArrayList(tasks));
         TableColumn<TaskItem, String> names = new TableColumn<>("Task");
         names.setCellValueFactory(new PropertyValueFactory<TaskItem, String>("name"));
         TableColumn<TaskItem, String> descriptions = new TableColumn<>("Description");
@@ -56,12 +95,12 @@ public class WorkPlanner extends Application {
         complete.setCellValueFactory(new PropertyValueFactory<TaskItem, String>("complete"));
         TableColumn<TaskItem, String> attributes = new TableColumn<>("Attributes");
         attributes.getColumns().setAll(descriptions,start,complete);
-        toReturn.getColumns().setAll(names,attributes);
-        return toReturn;
+        this.taskTableView.getColumns().setAll(names,attributes);
+        return this.taskTableView;
     }
 
-    public ObservableList<TaskItem> getAllTaskItems(ArrayList<ProjectItem> projs) {
-        ObservableList<TaskItem> toReturn = FXCollections.observableArrayList();
+    public ArrayList<TaskItem> getAllTaskItems(ArrayList<ProjectItem> projs) {
+        ArrayList<TaskItem> toReturn = new ArrayList<>();
         for (ProjectItem p: projs) {
             ArrayList<WorkItem> wrk = p.getWorkItems();
             for (WorkItem w: wrk) {

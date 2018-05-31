@@ -20,6 +20,7 @@ public class ProjectItem extends SaveableItem {
     public String getName() { return this.name; }
     public String getClassification() { return this.classification; }
     public ArrayList<WorkItem> getWorkItems() { return this.workItems; }
+    public int getNumberOfWorkItems() { return this.workItems.size(); }
 
     public String toJSON() {
         String workItemJson = "";

@@ -8,9 +8,7 @@ public class TaskItem extends SaveableItem {
     private String name;
     private String description;
     private LocalDateTime start;
-    private String startShort;
     private LocalDateTime end;
-    private String endShort;
     private boolean complete;
 
     public TaskItem(String name, String description,
@@ -18,9 +16,7 @@ public class TaskItem extends SaveableItem {
         this.name = name;
         this.description = description;
         this.start = start;
-        this.startShort = this.start.format(formatter);
         this.end = end;
-        this.endShort = this.end.format(formatter);
         this.complete = complete;
     }
 
@@ -28,9 +24,9 @@ public class TaskItem extends SaveableItem {
     public String getDescription() { return this.description; }
     public boolean getComplete() { return this.complete; }
     public LocalDateTime getStart() { return this.start; }
-    public String getStartShort() { return this.startShort; }
+    public String getStartShort() { return this.start.format(formatter); }
     public LocalDateTime getEnd() { return this.end; }
-    public String getEndShort() { return this.endShort; }
+    public String getEndShort() { return this.end.format(formatter); }
     public void setComplete(boolean complete) { this.complete = complete; }
 
     public String toJSON() {
