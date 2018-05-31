@@ -20,6 +20,7 @@ public class WorkItem extends SaveableItem {
     public String getName() { return this.name; }
     public String getDescription() { return this.description; }
     public ArrayList<TaskItem> getTasks() { return this.tasks; }
+    public int getNumberOfTasks() { return this.tasks.size(); }
     public boolean isComplete() {
         boolean toReturn = true;
         for (TaskItem t: tasks) {

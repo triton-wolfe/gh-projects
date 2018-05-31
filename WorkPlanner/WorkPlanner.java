@@ -33,14 +33,19 @@ public class WorkPlanner extends Application {
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest((e) -> saveFile(saveJson, projects));
         ObservableList<TaskItem> tasks = getAllTaskItems(projects);
+        Button
 
+
+
+        VBox taskTableScreen = new VBox();
         Scene taskTable = new Scene(getTaskTable(tasks));
         stage.setScene(taskTable);
         stage.show();
     }
 
-    public TableView<TaskItem> getTaskTable(ObservableList<TaskItem> tasks) {
-        TableView<TaskItem> toReturn = new TableView<TaskItem>(tasks);
+    public TableView<TaskItem> getTaskTable(ArrayList<TaskItem> tasks) {
+        TableView<TaskItem> toReturn =
+            new TableView<TaskItem>(FXCollections.observableArrayList(tasks));
         TableColumn<TaskItem, String> names = new TableColumn<>("Task");
         names.setCellValueFactory(new PropertyValueFactory<TaskItem, String>("name"));
         TableColumn<TaskItem, String> descriptions = new TableColumn<>("Description");
