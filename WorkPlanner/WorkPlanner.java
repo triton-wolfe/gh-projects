@@ -33,30 +33,35 @@ public class WorkPlanner extends Application {
 
     @Override
     public void start(Stage stage) {
-        File saveJson = new File("./saved.item");
+        File saveJson = new File("./saved.json");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest(e -> saveFile(saveJson, projects));
-        Button addProject = new Button("Add new Project");
-        Button addWork = new Button("Add new Work Item");
-        Button addTask = new Button("Add new Task Item");
-        HBox addButtons = new HBox(addProject, addWork, addTask);
+        NavigatorScreen navScreen = new NavigatorScreen(projects);
+
+        stage.setScene(navScreen.getView());
 
 
-        ArrayList<TaskItem> tasks = getAllTaskItems(projects);
-        VBox taskTableScreen = new VBox(getTaskTable(tasks), addButtons);
-        Scene taskTable = new Scene(taskTableScreen);
-        addProject.setOnAction(e -> {
-                addNewProjectScreen(projects);
-                this.taskTableView.refresh();
-            });
-        stage.setScene(taskTable);
+        // Button addProject = new Button("Add new Project");
+        // Button addWork = new Button("Add new Work Item");
+        // Button addTask = new Button("Add new Task Item");
+        // HBox addButtons = new HBox(addProject, addWork, addTask);
+        //
+        //
+        // ArrayList<TaskItem> tasks = getAllTaskItems(projects);
+        // VBox taskTableScreen = new VBox(getTaskTable(tasks), addButtons);
+        // Scene taskTable = new Scene(taskTableScreen);
+        // addProject.setOnAction(e -> {
+        //         addNewProjectScreen(projects);
+        //         this.taskTableView.refresh();
+        //     });
+        // stage.setScene(taskTable);
         stage.show();
     }
 
     public void addNewProjectScreen(ArrayList<ProjectItem> projects) {
         TableView<ProjectItem> table =
             new TableView<ProjectItem>(FXCollections.observableArrayList(projects));
-        TableColumn<ProjectItem, String> names = new TableColumn<>("Task");
+        TableColumn<ProjectItem, String> names = new TableColumn<>("Project");
         names.setCellValueFactory(new PropertyValueFactory<ProjectItem, String>("name"));
         TableColumn<ProjectItem, String> classification = new TableColumn<>("Classification");
         classification.setCellValueFactory(new PropertyValueFactory<ProjectItem, String>("classification"));
