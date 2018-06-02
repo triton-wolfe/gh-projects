@@ -33,7 +33,7 @@ public class WorkPlanner extends Application {
 
     @Override
     public void start(Stage stage) {
-        File saveJson = new File("./saved.json");
+        File saveJson = new File("./saved.item");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest(e -> saveFile(saveJson, projects));
         NavigatorScreen navScreen = new NavigatorScreen(projects);
