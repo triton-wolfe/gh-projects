@@ -37,6 +37,11 @@ public class TaskItem extends SaveableItem {
             this.end.toString(), this.complete);
     }
 
+    public static LocalDateTime parseDate(String str) {
+
+        return LocalDateTime.now();
+    }
+
     public static TaskItem fromJSON(String json) {
         String[] tokens = json.split(String.format("%n"));
         String nameParsed = ""; String descriptionParsed = "";

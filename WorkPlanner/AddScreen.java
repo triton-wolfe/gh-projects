@@ -57,18 +57,25 @@ public class AddScreen {
         this.wrkPop.setScene(new Scene(wrkScene));
 
         Label tskHeader = new Label("New Task Item");
-        Label nameTskLabel = new Label("Task Name: ");
+        Label nameTskLabel = new Label("         Task Name: ");
         TextField newTskName = new TextField();
+        Label startTskLabel = new Label("             Starts at: ");
+        TextField newTskStart = new TextField();
+        Label endTskLabel = new Label("              Ends at: ");
+        TextField newTskEnd = new TextField();
         Label classTskLabel = new Label("Task Description: ");
         TextArea newTskClass = new TextArea();
         newTskClass.setPrefRowCount(3);
         newTskClass.setWrapText(true);
         Button tskSave = new Button("Add new Task");
         VBox tskScene = new VBox(tskHeader, new HBox(nameTskLabel, newTskName),
-            new HBox(classTskLabel, newTskClass), tskSave);
+            new HBox(classTskLabel, newTskClass), new HBox(startTskLabel, newTskStart),
+            new HBox(endTskLabel, newTskEnd), tskSave);
         this.tskPop = new Stage();
         tskSave.setOnAction(e -> {
-                // tasks.add(new TaskItem(newTskName.getText(), newTskClass.getText()));
+                tasks.add(new TaskItem(newTskName.getText(), newTskClass.getText(),
+                TaskItem.parseDate(newTskStart.getText()),
+                TaskItem.parseDate(newTskEnd.getText()), false));
                 tskPop.close();
             });
         this.tskPop.setScene(new Scene(tskScene));
