@@ -35,7 +35,7 @@ public class WorkItem extends SaveableItem {
             taskJson += t.toJSON();
         }
         return String.format(
-            "  WorkItem: {%n    name: %s%n    description: %s%n    tasks: %s  }%n",
+            "  WorkItem: {%n    name: %s%n    description: %s%n    tasks: %s%n  }%n",
             this.name, this.description, taskJson);
     }
 
