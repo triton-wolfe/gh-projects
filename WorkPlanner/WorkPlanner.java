@@ -29,8 +29,6 @@ import java.time.LocalDateTime;
 
 public class WorkPlanner extends Application {
 
-    private TableView<TaskItem> taskTableView;
-
     @Override
     public void start(Stage stage) {
         File saveJson = new File("./saved.item");
@@ -57,6 +55,7 @@ public class WorkPlanner extends Application {
                     letter = ' ';
                 }
             }
+            testReader.close();
             String[] projectStrings = jsonBuilder.toString().split("Project");
             for (String ps: projectStrings) {
                 if (!ps.equals(" ")) {
