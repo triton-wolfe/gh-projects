@@ -3,12 +3,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AddScreen {
@@ -60,22 +63,24 @@ public class AddScreen {
         Label nameTskLabel = new Label("         Task Name: ");
         TextField newTskName = new TextField();
         Label startTskLabel = new Label("             Starts at: ");
-        TextField newTskStart = new TextField();
+        DatePicker startDatePicker = new DatePicker(LocalDate.now());
+        TextField newTskStart = new TextField("0:00 AM");
         Label endTskLabel = new Label("              Ends at: ");
-        TextField newTskEnd = new TextField();
+        DatePicker endDatePicker = new DatePicker(LocalDate.now());
+        TextField newTskEnd = new TextField("0:00 AM");
         Label classTskLabel = new Label("Task Description: ");
         TextArea newTskClass = new TextArea();
         newTskClass.setPrefRowCount(3);
         newTskClass.setWrapText(true);
         Button tskSave = new Button("Add new Task");
         VBox tskScene = new VBox(tskHeader, new HBox(nameTskLabel, newTskName),
-            new HBox(classTskLabel, newTskClass), new HBox(startTskLabel, newTskStart),
-            new HBox(endTskLabel, newTskEnd), tskSave);
+            new HBox(classTskLabel, newTskClass), new HBox(startTskLabel, startDatePicker, newTskStart),
+            new HBox(endTskLabel, endDatePicker, newTskEnd), tskSave);
         this.tskPop = new Stage();
         tskSave.setOnAction(e -> {
                 tasks.add(new TaskItem(newTskName.getText(), newTskClass.getText(),
-                TaskItem.parseDate(newTskStart.getText()),
-                TaskItem.parseDate(newTskEnd.getText()), false));
+                LocalDateTime.of(startDatePicker.getValue(), TaskItem.parseTime(newTskStart.getText())),
+                LocalDateTime.of(endDatePicker.getValue(), TaskItem.parseTime(newTskEnd.getText())), false));
                 tskPop.close();
             });
         this.tskPop.setScene(new Scene(tskScene));

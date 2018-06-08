@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -37,9 +38,10 @@ public class TaskItem extends SaveableItem {
             this.end.toString(), this.complete);
     }
 
-    public static LocalDateTime parseDate(String str) {
+    public static LocalTime parseTime(String str) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("h:mma");
+        return LocalTime.parse(str.replace(" ","").toUpperCase(), format);
 
-        return LocalDateTime.now();
     }
 
     public static TaskItem fromJSON(String json) {
