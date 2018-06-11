@@ -29,14 +29,37 @@ public class WorkItem extends SaveableItem {
         return toReturn;
     }
 
+    public String toXML() {
+        String toReturn = String.format("    <WorkItem>%n"
+            + "      <Name>%s</Name>%n"
+            + "      <Description>%s</Description>%n",
+            this.name, this.description);
+        for (TaskItem t: this.tasks) {
+            toReturn += t.toXML();
+        }
+        toReturn += String.format("    </WorkItem>%n");
+        return toReturn;
+    }
+
     public String toJSON() {
         String taskJson = "";
-        for (TaskItem t: tasks) {
+        for (TaskItem t: this.tasks) {
             taskJson += t.toJSON();
         }
         return String.format(
             "  WorkItem: {%n    name: %s%n    description: %s%n    tasks: %s%n  }%n",
             this.name, this.description, taskJson);
+    }
+
+    public static WorkItem fromXML(String xml) {
+        String name = SaveableItem.getXMLTag(xml, "Name");
+        String description = SaveableItem.getXMLTag(xml, "Description");
+        ArrayList<String> taskStr = SaveableItem.getXMLTags(xml, "TaskItem");
+        ArrayList<TaskItem> tasks = new ArrayList<>();
+        for (String t: taskStr) {
+            tasks.add(TaskItem.fromXML(t));
+        }
+        return new WorkItem(name, description, tasks);
     }
 
     public static WorkItem fromJSON(String json) {
