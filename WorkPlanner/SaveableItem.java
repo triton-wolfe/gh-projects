@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public abstract class SaveableItem {
     public abstract String toJSON();
-    public static ArrayList<String> getNested(String json) {
+    public static ArrayList<String> getNestedJSON(String json) {
         ArrayList<Integer> startInds = new ArrayList<>();
         ArrayList<Integer> endInds = new ArrayList<>();
         ArrayList<String> toReturn = new ArrayList<>();

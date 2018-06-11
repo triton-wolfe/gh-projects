@@ -40,18 +40,11 @@ public class WorkItem extends SaveableItem {
     }
 
     public static WorkItem fromJSON(String json) {
-        ArrayList<String> taskString = SaveableItem.getNested(json);
+        ArrayList<String> taskString = SaveableItem.getNestedJSON(json);
         ArrayList<TaskItem> tasks = new ArrayList<>();
         for (String t: taskString) {
             tasks.add(TaskItem.fromJSON(t));
         }
-        /*Pattern taskItems = Pattern.compile("TaskItem: \\{.*?\\}");
-        Matcher taskItemsMatch = taskItems.matcher(json);
-        ArrayList<TaskItem> tasks = new ArrayList<>();
-        while (taskItemsMatch.find()) {
-            String taskItem = taskItemsMatch.group();
-            tasks.add(TaskItem.fromJSON(taskItem));
-        }*/
         String[] tokens = json.split(String.format("%n"));
         String name = "";
         String description = "";
