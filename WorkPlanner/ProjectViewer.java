@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ProjectViewer {
 
+    private static int rows = 7;
     private ArrayList<ProjectItem> projects;
     private ArrayList<WorkItem> workItems;
     private ArrayList<TaskItem> tasks;
@@ -82,7 +83,7 @@ public class ProjectViewer {
         VBox projectNumChildren = new VBox();
         projectNumChildren.setAlignment(Pos.TOP_CENTER);
         projectNumChildren.setStyle("-fx-border-width: 2 1; -fx-border-style: solid");
-
+        int i = 0;
         for (ProjectItem p: this.projects) {
             Label temp1 = new Label(" " + p.getName() + " ");
             temp1.setPrefWidth(80);
@@ -132,7 +133,17 @@ public class ProjectViewer {
                 refresh();
             });
             projectNumChildren.getChildren().add(temp3);
+            i++;
         }
+        while (i <= rows) {
+            Label blank = new Label("");
+            blank.setStyle("-fx-border-width: 0 0 1 0; -fx-border-color: black");
+            projectNames.getChildren().add(blank);
+            projectClass.getChildren().add(blank);
+            projectNumChildren.getChildren().add(blank);
+            i++;
+        }
+
         HBox table = new HBox(projectNames, projectClass, projectNumChildren);
         ScrollPane scroll = new ScrollPane(table);
         scroll.setPrefHeight(300);
@@ -162,7 +173,7 @@ public class ProjectViewer {
         VBox workNumChildren = new VBox(workNumOfHeader);
         workNumChildren.setAlignment(Pos.TOP_CENTER);
         workNumChildren.setStyle("-fx-border-width: 2 1; -fx-border-style: solid");
-
+        int i = 0;
         for (WorkItem p: this.workItems) {
             Label temp1 = new Label(" " + p.getName() + " ");
             temp1.setPrefWidth(80);
@@ -209,6 +220,15 @@ public class ProjectViewer {
                 refresh();
             });
             workNumChildren.getChildren().add(temp3);
+            i++;
+        }
+        while (i <= rows) {
+            Label blank = new Label("");
+            blank.setStyle("-fx-border-width: 0 0 1 0; -fx-border-color: black");
+            workNames.getChildren().add(blank);
+            workDecrip.getChildren().add(blank);
+            workNumChildren.getChildren().add(blank);
+            i++;
         }
         HBox table = new HBox(workNames, workDecrip, workNumChildren);
         ScrollPane scroll = new ScrollPane(table);
@@ -239,7 +259,7 @@ public class ProjectViewer {
         VBox taskNumChildren = new VBox(taskNumOfHeader);
         taskNumChildren.setAlignment(Pos.TOP_CENTER);
         taskNumChildren.setStyle("-fx-border-width: 2 1; -fx-border-style: solid");
-
+        int i = 0;
         for (TaskItem p: this.tasks) {
             Label temp1 = new Label(" " + p.getName() + " ");
             temp1.setPrefWidth(80);
@@ -271,6 +291,15 @@ public class ProjectViewer {
                 highlight(ind, taskNumChildren);
             });
             taskNumChildren.getChildren().add(temp3);
+            i++;
+        }
+        while (i <= rows) {
+            Label blank = new Label("");
+            blank.setStyle("-fx-border-width: 0 0 1 0; -fx-border-color: black");
+            taskNames.getChildren().add(blank);
+            taskDecrip.getChildren().add(blank);
+            taskNumChildren.getChildren().add(blank);
+            i++;
         }
         HBox table = new HBox(taskNames, taskDecrip, taskNumChildren);
         ScrollPane scroll = new ScrollPane(table);

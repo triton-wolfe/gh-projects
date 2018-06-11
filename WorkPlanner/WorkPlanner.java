@@ -34,7 +34,6 @@ public class WorkPlanner extends Application {
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest(e -> saveFile(saveJson, projects));
         ProjectViewer viewer = new ProjectViewer(projects);
-
         stage.setScene(new Scene(viewer.getView()));
 
         stage.show();
