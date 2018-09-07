@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -29,15 +28,12 @@ import java.time.LocalDateTime;
 
 public class WorkPlanner extends Application {
 
-    private TableView<TaskItem> taskTableView;
-
     @Override
     public void start(Stage stage) {
         File saveJson = new File("./saved.item");
         ArrayList<ProjectItem> projects = loadFile(saveJson);
         stage.setOnCloseRequest(e -> saveFile(saveJson, projects));
         ProjectViewer viewer = new ProjectViewer(projects);
-
         stage.setScene(new Scene(viewer.getView()));
 
         stage.show();
@@ -47,33 +43,37 @@ public class WorkPlanner extends Application {
         ArrayList<ProjectItem> toReturn = new ArrayList<>();
         try {
             FileReader testReader = new FileReader(file);
-            StringBuilder jsonBuilder = new StringBuilder();
+            StringBuilder xmlBuilder = new StringBuilder();
             int letter = ' ';
             while (letter != -1) {
-                jsonBuilder.append((char) letter);
+                xmlBuilder.append((char) letter);
                 try {
                     letter = testReader.read();
                 } catch(IOException e) {
                     letter = ' ';
                 }
             }
-            String[] projectStrings = jsonBuilder.toString().split("Project");
-            for (String ps: projectStrings) {
-                if (!ps.equals(" ")) {
-                    toReturn.add(ProjectItem.fromJSON(ps));
-                }
+            testReader.close();
+            String proj = SaveableItem.getXMLTag(xmlBuilder.toString(), "Projects");
+            ArrayList<String> projects = SaveableItem.getXMLTags(proj, "ProjectItem");
+            for (String p: projects) {
+                toReturn.add(ProjectItem.fromXML(p));
             }
+
         } catch(FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         return toReturn;
     }
 
     public void saveFile(File file, ArrayList<ProjectItem> projItems) {
-        String toSave = "";
+        String toSave = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\"?>%n<Projects>%n");
         for (ProjectItem p: projItems) {
-            toSave += p.toJSON();
+            toSave += p.toXML();
         }
+        toSave += String.format("</Projects>");
         try {
             FileWriter fh = new FileWriter(file, false);
             fh.write(toSave);

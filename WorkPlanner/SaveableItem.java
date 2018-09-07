@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public abstract class SaveableItem {
     public abstract String toJSON();
-    public static ArrayList<String> getNested(String json) {
+    public static ArrayList<String> getNestedJSON(String json) {
         ArrayList<Integer> startInds = new ArrayList<>();
         ArrayList<Integer> endInds = new ArrayList<>();
         ArrayList<String> toReturn = new ArrayList<>();
@@ -29,5 +32,26 @@ public abstract class SaveableItem {
                 endInds.get(j).intValue() + 1));
         }
         return toReturn;
+    }
+
+    public static ArrayList<String> getXMLTags(String xml, String tag) {
+        ArrayList<String> toReturn = new ArrayList<>();
+        Pattern pat = Pattern.compile("<" + tag + ">(.*?)</" + tag + ">", Pattern.DOTALL);
+
+        Matcher mat = pat.matcher(xml);
+        while (mat.find()) {
+            toReturn.add(mat.group(1));
+        }
+        return toReturn;
+    }
+
+    public static String getXMLTag(String xml, String tag) {
+        Pattern pat = Pattern.compile("<" + tag + ">(.*?)</" + tag + ">", Pattern.DOTALL);
+        Matcher mat = pat.matcher(xml);
+        if (mat.find()) {
+            return mat.group(1);
+        } else {
+            return "";
+        }
     }
 }

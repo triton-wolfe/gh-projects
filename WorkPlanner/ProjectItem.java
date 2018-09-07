@@ -22,6 +22,18 @@ public class ProjectItem extends SaveableItem {
     public ArrayList<WorkItem> getWorkItems() { return this.workItems; }
     public int getNumberOfWorkItems() { return this.workItems.size(); }
 
+    public String toXML() {
+        String toReturn = String.format("  <ProjectItem>%n"
+            + "    <Name>%s</Name>%n"
+            + "    <Classification>%s</Classification>%n",
+            this.name, this.classification);
+        for (WorkItem t: this.workItems) {
+            toReturn += t.toXML();
+        }
+        toReturn += String.format("  </ProjectItem>%n");
+        return toReturn;
+    }
+
     public String toJSON() {
         String workItemJson = "";
         for (WorkItem w: workItems) {
@@ -32,19 +44,23 @@ public class ProjectItem extends SaveableItem {
             this.name, this.classification, workItemJson);
     }
 
+    public static ProjectItem fromXML(String xml) {
+        String name = SaveableItem.getXMLTag(xml, "Name");
+        String classification = SaveableItem.getXMLTag(xml, "Classification");
+        ArrayList<String> workItemStr = SaveableItem.getXMLTags(xml, "WorkItem");
+        ArrayList<WorkItem> workItems = new ArrayList<>();
+        for (String wi: workItemStr) {
+            workItems.add(WorkItem.fromXML(wi));
+        }
+        return new ProjectItem(name, classification, workItems);
+    }
+
     public static ProjectItem fromJSON(String json) {
-        ArrayList<String> workItemString = SaveableItem.getNested(json);
+        ArrayList<String> workItemString = SaveableItem.getNestedJSON(json);
         ArrayList<WorkItem> workItems = new ArrayList<>();
         for (String wi: workItemString) {
             workItems.add(WorkItem.fromJSON(wi));
         }
-        /*Pattern workItemPat = Pattern.compile("WorkItem: \\{.*?\\}");
-        Matcher workItemsMatch = workItemPat.matcher(json);
-        ArrayList<WorkItem> workItems = new ArrayList<>();
-        while (workItemsMatch.find()) {
-            String workItem = workItemsMatch.group();
-            workItems.add(WorkItem.fromJSON(workItem));
-        }*/
         String[] tokens = json.split(String.format("%n"));
         String name = "";
         String classification = "";

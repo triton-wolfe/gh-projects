@@ -29,9 +29,21 @@ public class WorkItem extends SaveableItem {
         return toReturn;
     }
 
+    public String toXML() {
+        String toReturn = String.format("    <WorkItem>%n"
+            + "      <Name>%s</Name>%n"
+            + "      <Description>%s</Description>%n",
+            this.name, this.description);
+        for (TaskItem t: this.tasks) {
+            toReturn += t.toXML();
+        }
+        toReturn += String.format("    </WorkItem>%n");
+        return toReturn;
+    }
+
     public String toJSON() {
         String taskJson = "";
-        for (TaskItem t: tasks) {
+        for (TaskItem t: this.tasks) {
             taskJson += t.toJSON();
         }
         return String.format(
@@ -39,19 +51,23 @@ public class WorkItem extends SaveableItem {
             this.name, this.description, taskJson);
     }
 
+    public static WorkItem fromXML(String xml) {
+        String name = SaveableItem.getXMLTag(xml, "Name");
+        String description = SaveableItem.getXMLTag(xml, "Description");
+        ArrayList<String> taskStr = SaveableItem.getXMLTags(xml, "TaskItem");
+        ArrayList<TaskItem> tasks = new ArrayList<>();
+        for (String t: taskStr) {
+            tasks.add(TaskItem.fromXML(t));
+        }
+        return new WorkItem(name, description, tasks);
+    }
+
     public static WorkItem fromJSON(String json) {
-        ArrayList<String> taskString = SaveableItem.getNested(json);
+        ArrayList<String> taskString = SaveableItem.getNestedJSON(json);
         ArrayList<TaskItem> tasks = new ArrayList<>();
         for (String t: taskString) {
             tasks.add(TaskItem.fromJSON(t));
         }
-        /*Pattern taskItems = Pattern.compile("TaskItem: \\{.*?\\}");
-        Matcher taskItemsMatch = taskItems.matcher(json);
-        ArrayList<TaskItem> tasks = new ArrayList<>();
-        while (taskItemsMatch.find()) {
-            String taskItem = taskItemsMatch.group();
-            tasks.add(TaskItem.fromJSON(taskItem));
-        }*/
         String[] tokens = json.split(String.format("%n"));
         String name = "";
         String description = "";
