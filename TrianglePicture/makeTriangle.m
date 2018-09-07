@@ -15,7 +15,7 @@ function makeTriangle
     axis equal
     axis([-8 8 -4.5 4.5])
     axis off
-    fig.Color = [0 0 0];
+    fig.Color = [1 1 1];% [0 0 0];
     h = trngle(dv(2)/1.7,rose);
     rotate(h,[0 0 1],90,[0 0 0])
     shift(h,[0 -1.2 0])
