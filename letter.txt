@@ -1,0 +1,26 @@
+Hello Brother <brother>,
+Dues this semester are $550, given your previous balance of $<previous> you owe $<dues>.
+We have several options for payment plans this semester:
+>Option 1: The Whole Hog
+>09/05: $<1.1>
+
+>Option 2: The 1 2 Punch
+>09/05: $<2.1>
+>10/31: $<2.2>
+
+>Option 3: Three's Company
+>09/05: $<3.1>
+>10/10: $<3.2>
+>11/14: $<3.3>
+
+>Option 4: The Long Haul
+>09/05: $<4.1>
+>10/03: $<4.2>
+>10/31: $<4.3>
+>11/28: $<4.4>
+
+>Option 5: Custom Order
+>Discuss with Triton.
+Please let me know what option you are going with as soon as you know. Dont worry too much about the first due date. I can accept the first payment during chapter; however, if you can pay by the fifth, please do to help facilitate rush.
+In F, S, C, and T,
+Brother Triton Wolfe GT' 17

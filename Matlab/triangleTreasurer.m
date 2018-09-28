@@ -1,0 +1,32 @@
+fh = fopen('letter.txt');
+letter = char(fread(fh)');
+fclose(fh);
+[~, ~, data] = xlsread('TriangleSpring.xlsx');
+fh = fopen('out.txt', 'w');
+for i = 1:size(data,1)
+    newStr = letter;
+    prev = 550 + data{i,2};
+    dues = -1 .* data{i,2};
+    a1 = dues;
+    b1 = ceil(dues ./ 10) .* 5;
+    b2 = dues - b1;
+    c1 = ceil(dues ./ 15) .* 5;
+    c3 = dues - (2 .* c1);
+    d1 = ceil(dues ./ 20) .* 5;
+    d4 = dues - (3 .* d1);
+    newStr = strrep(newStr, '<brother>', data{i,1});
+    newStr = strrep(newStr, '<previous>', int2str(prev));
+    newStr = strrep(newStr, '<dues>', int2str(dues));
+    newStr = strrep(newStr, '<1.1>', int2str(a1));
+    newStr = strrep(newStr, '<2.1>', int2str(b1));
+    newStr = strrep(newStr, '<2.2>', int2str(b2));
+    newStr = strrep(newStr, '<3.1>', int2str(c1));
+    newStr = strrep(newStr, '<3.2>', int2str(c1));
+    newStr = strrep(newStr, '<3.3>', int2str(c3));
+    newStr = strrep(newStr, '<4.1>', int2str(d1));
+    newStr = strrep(newStr, '<4.2>', int2str(d1));
+    newStr = strrep(newStr, '<4.3>', int2str(d1));
+    newStr = strrep(newStr, '<4.4>', int2str(d4));
+    fprintf(fh, '%s\n\n\n', newStr);
+end
+fclose(fh);

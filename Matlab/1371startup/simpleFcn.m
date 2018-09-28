@@ -1,0 +1,3 @@
+function simpleFcn()
+       % Hi
+end
