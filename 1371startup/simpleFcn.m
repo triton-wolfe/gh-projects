@@ -1,3 +1,0 @@
-function simpleFcn()
-       % Hi
-end

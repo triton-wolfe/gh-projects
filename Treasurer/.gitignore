@@ -1,7 +1,0 @@
-# java class files #
-####################
-*.class
-
-# runner class #
-################
-runner.java
